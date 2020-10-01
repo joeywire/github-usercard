@@ -1,13 +1,24 @@
+import axios from 'axios';
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-
+axios.get('https://api.github.com/users/joeywire')
+  .then(info => {
+    console.log(info); 
+  })
+  .catch(problem => {
+    console.log(problem); 
+    debugger
+  })
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
     data in order to use it to build your component function
+    
+  Inspected in zsh w/ `http get https://api.github.com/users/joeywire`
 
     Skip to STEP 3.
 */
@@ -49,6 +60,50 @@ const followersArray = [];
       </div>
     </div>
 */
+function gitCard(obj) {
+  //Instantiate Elements 
+  const card = document.createElement('div'); 
+  const cardInfo = document.createElement('div');
+  const userIMG = document.createElement('img');
+  const name = document.createElement('h3'); 
+  const userName = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p'); 
+  const profileLink = document.createElement('a');
+  const follower = document.createElement('p'); 
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+  //Add Classes 
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  name.classList.add('name');
+  userName.classList.add('username');
+  //Nest Element 
+  card.appendChild(userIMG);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(userName);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  cardInfo.appendChild(follower);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+  profile.appendChild(profileLink);
+  //Populate element content 
+  userIMG.src = obj.data.avatar_url;
+  name.textContent = obj.data.name;
+  userName.textContent = obj.data.login;
+  location.textContent =`Location: ${obj.data.location}`;
+  profile.textContent = 'Profile';
+  profileLink.href = obj.data.html_url;
+  profileLink.textContent = obj.data.html_url;
+  follower.textContent = `Followers: ${obj.data.followers}`;
+  following.textContent = `Following: ${obj.data.following}`;
+  bio.textContent = `Bio: ${obj.data.bio}`;
+  //Add Any Event Listners
+  //Return Something
+  return card;
+}
 
 /*
   List of LS Instructors Github username's:
