@@ -6,10 +6,10 @@ import axios from 'axios';
     https://api.github.com/users/<your name>
 */
 axios.get('https://api.github.com/users/joeywire')
-  .then(info => {
+  .then(info => { //What we want to happen - this could be a loading bubble while its working (async)
     console.log(info); 
   })
-  .catch(problem => {
+  .catch(problem => { //Catches the error - code within to handle the error (message, default, etc.)
     console.log(problem); 
     debugger
   })
