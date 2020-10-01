@@ -117,6 +117,7 @@ function gitCard(obj) {
   profile.textContent = 'Profile: ';
   profileLink.href = obj.data.html_url;
   profileLink.textContent = obj.data.html_url;
+  profileLink.target = "_blank";
   follower.textContent = `Followers: ${obj.data.followers}`;
   following.textContent = `Following: ${obj.data.following}`;
   bio.textContent = `Bio: ${obj.data.bio}`;
