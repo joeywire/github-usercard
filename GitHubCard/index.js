@@ -27,7 +27,16 @@ axios.get('https://api.github.com/users/joeywire')
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
+const cards = document.querySelector('.cards')
 
+axios.get('https://api.github.com/users/joeywire')
+  .then(info => {
+    cards.append(gitCard(info));
+  })
+  .catch(problem => {
+    console.log(problem); 
+    debugger
+  })
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
     follow this link in your browser https://api.github.com/users/<Your github name>/followers,
@@ -39,8 +48,18 @@ axios.get('https://api.github.com/users/joeywire')
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
 
+followersArray.forEach(item => {
+  axios.get(`https://api.github.com/users/${item}`)
+  .then(info => {
+    cards.append(gitCard(info));
+  })
+  .catch(problem => {
+    console.log(problem); 
+    debugger
+  })
+})
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
@@ -88,20 +107,24 @@ function gitCard(obj) {
   cardInfo.appendChild(follower);
   cardInfo.appendChild(following);
   cardInfo.appendChild(bio);
-  profile.appendChild(profileLink);
+  
+  
   //Populate element content 
   userIMG.src = obj.data.avatar_url;
   name.textContent = obj.data.name;
   userName.textContent = obj.data.login;
   location.textContent =`Location: ${obj.data.location}`;
-  profile.textContent = 'Profile';
+  profile.textContent = 'Profile: ';
   profileLink.href = obj.data.html_url;
   profileLink.textContent = obj.data.html_url;
   follower.textContent = `Followers: ${obj.data.followers}`;
   following.textContent = `Following: ${obj.data.following}`;
   bio.textContent = `Bio: ${obj.data.bio}`;
+  //Not sure why inserAdjacentElment had to be put down here for it to populate on the page but it worked
+  profile.insertAdjacentElement("beforeend", profileLink);
   //Add Any Event Listners
   //Return Something
+  console.log(card);
   return card;
 }
 
